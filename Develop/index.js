@@ -59,12 +59,19 @@ function writeToFile(fileName, data) {
     fs.writeFile('./Develop'+fileName, data, function(err) {
         if (err) {
             return console.log(err);
+        } else {
+            return fs.writeFileSync(path.join(process.cwd(), filename), data);
         }
     })
 }
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    inquirer.prompt(questions)
+    .then(function (responses) {
+        writeToFile("README.md", generateMarkdown({...responses}))
+    })
+}
 
 // Function call to initialize app
 init();
